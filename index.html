@@ -1,20 +1,226 @@
-<section class="card">
-  <h2 class="text-2xl font-semibold mb-4">Nick's Family: Clayton to Mount Buller</h2>
-  <ul class="list-disc list-inside">
-    <li>7:00 AM - Depart Clayton</li>
-    <li>8:20 AM - Arrive at Yea Bakery (breakfast)</li>
-    <li>8:50 AM - Leave Yea</li>
-    <li>10:20 AM - Stop in Mansfield (Snow Chains)</li>
-    <li>11:30 AM - Arrive at Mount Buller</li>
-  </ul>
-</section>
-<section class="card">
-  <h2 class="text-2xl font-semibold mb-4">Sid's Family: Point Cook to Mount Buller</h2>
-  <ul class="list-disc list-inside">
-    <li>7:00 AM - Depart Point Cook</li>
-    <li>8:30 AM - Arrive at Yea Bakery (breakfast)</li>
-    <li>8:50 AM - Leave Yea</li>
-    <li>10:20 AM - Stop in Mansfield (Snow Chains)</li>
-    <li>11:30 AM - Arrive at Mount Buller</li>
-  </ul>
-</section>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Mount Buller Day Trip Planner</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
+  <style>
+    /* Background with snowy mountain image and dark overlay */
+    body {
+      margin: 0;
+      font-family: system-ui, sans-serif;
+      background: 
+        linear-gradient(rgba(0,0,30,0.6), rgba(0,0,30,0.6)),
+        url('https://images.unsplash.com/photo-1602524204966-2699a4d4d05d?auto=format&fit=crop&w=1470&q=80') no-repeat center center fixed;
+      background-size: cover;
+      color: #f0f0f0;
+      position: relative;
+      overflow-x: hidden;
+      min-height: 100vh;
+    }
+
+    /* Content container */
+    .container {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 2.5rem 1rem 4rem;
+      background: rgba(0, 0, 20, 0.55);
+      border-radius: 1rem;
+      box-shadow: 0 0 25px rgba(0,0,0,0.7);
+      backdrop-filter: saturate(180%) blur(10px);
+    }
+
+    /* Snowflake styles */
+    .snowflake {
+      position: fixed;
+      top: -10px;
+      color: #fff;
+      font-size: 1.5em;
+      user-select: none;
+      pointer-events: none;
+      animation: fall linear infinite;
+      opacity: 0.8;
+      text-shadow: 0 0 3px rgba(0,0,0,0.7);
+      z-index: 9999;
+    }
+    @keyframes fall {
+      0% {
+        transform: translateY(0) rotate(0deg);
+        opacity: 0.8;
+      }
+      80% {
+        opacity: 0.8;
+      }
+      100% {
+        transform: translateY(100vh) rotate(360deg);
+        opacity: 0;
+      }
+    }
+
+    /* Fade in animations */
+    .fade-in {
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeInUp 1s ease-out forwards;
+    }
+    .fade-in.delay-1 { animation-delay: 0.2s; }
+    .fade-in.delay-2 { animation-delay: 0.4s; }
+    .fade-in.delay-3 { animation-delay: 0.6s; }
+    @keyframes fadeInUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Card styling */
+    .card {
+      background: rgba(255 255 255 / 0.1);
+      padding: 1.5rem;
+      border-radius: 1rem;
+      box-shadow: 0 0 15px rgba(0,0,0,0.4);
+      backdrop-filter: saturate(180%) blur(5px);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 30px rgba(0,0,50,0.6);
+    }
+
+    /* Buttons */
+    a.btn {
+      display: inline-block;
+      padding: 0.75rem 1.5rem;
+      border-radius: 0.75rem;
+      color: white;
+      text-decoration: none;
+      font-weight: 600;
+      box-shadow: 0 4px 12px rgba(0,0,80,0.4);
+      transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    }
+    a.btn.blue {
+      background-color: #2563eb; /* Tailwind blue-600 */
+    }
+    a.btn.blue:hover {
+      background-color: #1e40af; /* Tailwind blue-800 */
+      box-shadow: 0 8px 20px rgba(0,0,80,0.7);
+    }
+    a.btn.green {
+      background-color: #16a34a; /* Tailwind green-600 */
+    }
+    a.btn.green:hover {
+      background-color: #15803d; /* Tailwind green-700 */
+      box-shadow: 0 8px 20px rgba(0,80,0,0.7);
+    }
+
+    /* Car climbing mountain animation container */
+    .car-mountain {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      width: 120px;
+      height: 80px;
+      z-index: 10000;
+      user-select: none;
+      pointer-events: none;
+      animation: climb 8s linear infinite;
+    }
+
+    @keyframes climb {
+      0% {
+        transform: translate(0, 20px) rotate(0deg);
+        opacity: 0;
+      }
+      10% {
+        opacity: 1;
+      }
+      100% {
+        transform: translate(-100px, -60px) rotate(-15deg);
+        opacity: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1 class="text-4xl font-bold mb-6 text-center fade-in delay-1">Mount Buller Day Trip Routing Map</h1>
+    <p class="mb-10 text-center fade-in delay-2">Date: 2 August | Departure: 7:00 AM</p>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 fade-in delay-3">
+      <section class="card">
+        <h2 class="text-2xl font-semibold mb-4">Nick's Family: Clayton to Mount Buller</h2>
+        <ul class="list-disc list-inside">
+          <li>7:00 AM - Depart Clayton</li>
+          <li>8:20 AM - Arrive at Yea Bakery (breakfast)</li>
+          <li>8:50 AM - Leave Yea</li>
+          <li>10:20 AM - Stop in Mansfield (Snow Chains)</li>
+          <li>11:30 AM - Arrive at Mount Buller</li>
+        </ul>
+      </section>
+      <section class="card">
+        <h2 class="text-2xl font-semibold mb-4">Sid's Family: Point Cook to Mount Buller</h2>
+        <ul class="list-disc list-inside">
+          <li>7:00 AM - Depart Point Cook</li>
+          <li>8:30 AM - Arrive at Yea Bakery (breakfast)</li>
+          <li>8:50 AM - Leave Yea</li>
+          <li>10:20 AM - Stop in Mansfield (Snow Chains)</li>
+          <li>11:30 AM - Arrive at Mount Buller</li>
+        </ul>
+      </section>
+    </div>
+
+    <section class="my-12 fade-in delay-3 text-center">
+      <h2 class="text-2xl font-semibold mb-6">Map Preview: Both Routes to Mount Buller</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-4">
+        <div>
+          <h3 class="text-xl font-medium mb-2">Nick's Family Route</h3>
+          <iframe
+            src="https://www.google.com/maps/embed?pb=!1m28!1m12!1m3!1d494105.3536727856!2d145.03265402038966!3d-37.54282309835344!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!4m13!3e0!4m5!1s0x6ad613e4a51e6f21%3A0x5045675218ce480!2sClayton+VIC!3m2!1d-37.9285855!2d145.1227896!4m5!1s0x6ad71d2d5e19e63f%3A0x5045675218ce520!2sMount+Buller+VIC!3m2!1d-37.1461303!2d146.4460552!5e0!3m2!1sen!2sau!4v1722147583794!5m2!1sen!2sau"
+            width="100%" height="320" style="border:0;" allowfullscreen="" loading="lazy">
+          </iframe>
+        </div>
+        <div>
+          <h3 class="text-xl font-medium mb-2">Sid's Family Route</h3>
+          <iframe
+            src="https://www.google.com/maps/embed?pb=!1m28!1m12!1m3!1d492419.20364815995!2d144.78772926225892!3d-37.60308909500737!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!4m13!3e0!4m5!1s0x6ad66698c1fa8c5d%3A0x5045675218ce6e0!2sPoint+Cook+VIC!3m2!1d-37.9136171!2d144.7503677!4m5!1s0x6ad71d2d5e19e63f%3A0x5045675218ce520!2sMount+Buller+VIC!3m2!1d-37.1461303!2d146.4460552!5e0!3m2!1sen!2sau!4v1722150023121!5m2!1sen!2sau"
+            width="100%" height="320" style="border:0;" allowfullscreen="" loading="lazy">
+          </iframe>
+        </div>
+      </div>
+
+      <p class="mb-4 text-gray-300">Note: These maps show simplified routes. Click the buttons below for full directions with all stops.</p>
+      <div class="space-x-4">
+        <a href="https://www.google.com/maps/dir/Clayton+VIC/Yea+Bakery,+High+St,+Yea+VIC/Mansfield+VIC/Mount+Buller+VIC" target="_blank" class="btn blue">Nick's Family Full Route</a>
+        <a href="https://www.google.com/maps/dir/Point+Cook+VIC/Yea+Bakery,+Yea+VIC/Mansfield+VIC/Mount+Buller+VIC" target="_blank" class="btn green">Sid's Family Full Route</a>
+      </div>
+    </section>
+  </div>
+
+  <!-- Snowfall Effect -->
+  <script>
+    (function() {
+      const container = document.body;
+      for (let i = 0; i < 60; i++) {
+        const snow = document.createElement('div');
+        snow.classList.add('snowflake');
+        snow.innerText = '❄';
+        snow.style.left = Math.random() * 100 + 'vw';
+        snow.style.animationDuration = (5 + Math.random() * 5) + 's';
+        snow.style.fontSize = (Math.random() * 12 + 10) + 'px';
+        snow.style.animationDelay = Math.random() * 10 + 's';
+        container.appendChild(snow);
+      }
+    })();
+  </script>
+
+  <!-- Car climbing mountain SVG animation -->
+  <svg class="car-mountain" viewBox="0 0 120 80" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+    <path d="M10 70 L50 10 L90 70" stroke="#ddd" stroke-width="4" stroke-linejoin="round" />
+    <rect x="30" y="50" width="30" height="15" rx="3" ry="3" fill="#58a" />
+    <circle cx="38" cy="68" r="6" fill="#222" />
+    <circle cx="62" cy="68" r="6" fill="#222" />
+    <rect x="40" y="40" width="10" height="15" fill="#336" rx="2" ry="2" />
+  </svg>
+</body>
+</html>
